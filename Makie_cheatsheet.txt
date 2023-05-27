@@ -77,4 +77,5 @@ end
 
 axislegend(ax1)
 axislegend(ax2)
-save("plot$(time_ns()).png", fig)
+save("plot$(time_ns()).png", fig, px_per_unit=3)
+save("plot$(time_ns()).svg", fig, pt_per_unit=3) # Does not work, I dont know why :(
