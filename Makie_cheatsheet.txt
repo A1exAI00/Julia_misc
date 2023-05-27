@@ -1,0 +1,80 @@
+
+using CairoMakie
+#using GLMakie
+
+
+########################################################################
+########################################################################
+
+
+fig = Figure(resolution = (1200, 800))
+titles = ["Title2", "Title1"]
+xlabels = ["x label 1", "x label 2"]
+ylabels = ["y label 1", "y label 2"]
+labels = ["label 1", "label 2"]
+limits!(ax1, x1, x2, y1, y2)
+
+
+########################################################################
+########################################################################
+
+
+# Linear scale
+ax1 = Axis(fig[1, 1], 
+    title=titles[1], 
+    xlabel=xlabels[1], 
+    ylabel=ylabels[1])
+    
+# Log-log scale
+ax2 = Axis(fig[1, 2], 
+    title=titles[2], 
+    xlabel=xlabels[2], 
+    ylabel=ylabels[2], 
+    xscale=log10, 
+    yscale=log10, 
+    xminorticksvisible = true, 
+    xminorgridvisible = true, 
+    xminorticks = IntervalsBetween(10))
+
+
+########################################################################
+########################################################################
+
+
+# Horizontal & Vertical lines
+vlines!(ax1, 0.0, color=:black)
+hlines!(ax1, 0.0, color=:black)
+
+# Scatter plot (Experimental data)
+scatter!(ax1, 
+    x_span, y_arr, 
+    color=:blue, 
+    label=labels[1], 
+    markersize=7)
+    
+# Line plot (Approximation)
+lines!(ax2, 
+    x_span, y_arr, 
+    color=:red, 
+    label=labels[2])
+
+# Delete plots
+empty!(ax1)
+
+
+########################################################################
+########################################################################
+
+
+record(fig, "NAME.gif", iterable_for_i; framerate=30) do i
+	code...
+end
+
+
+########################################################################
+########################################################################
+
+
+axislegend(ax1)
+axislegend(ax2)
+save("plot$(time_ns()).png", fig)
